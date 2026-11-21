@@ -36,6 +36,16 @@ Refresh with `POST /refresh` and `{"refresh_token":"..."}`. Logout with `POST /l
 ```bash
 export PYTHONPATH=.
 pytest -q
+
+python -m pytest \
+  tests/test_concurrent_refresh.py \
+  -v
+
+python -m pytest \
+  tests/test_concurrent_refresh.py \
+  --count=100 -q  # To run it repeatedly, need to install pytest-repeat
+
+python -m pytest tests/test_security.py::test_concurrent_refresh -v
 ```
 
 ## Deliberate limitations
@@ -56,7 +66,7 @@ Install developer tools and run the full test suite:
 
 ```bash
 python -m pip install -r requirements-dev.txt
-ruff check app tests
+ruff check app tests  # python -m ruff check app tests
 pytest -q --cov=app --cov-report=term-missing
 ```
 
